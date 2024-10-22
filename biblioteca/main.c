@@ -3,13 +3,15 @@
 
 
 void main() {
-    dict *dic,*dic2; // Diccionario
+    dict *dic,*dic2,*dic3,*dic4; // Diccionario
     object key, value; // Almacenes de datos
-    object key2,value2; //Almacenes de datos para segunda biblioteca
+    object key2,value2,key3,value3; //Almacenes de datos para segunda biblioteca
 
     // creamos diccionario
     dic = dict_new();
     dic2 = dict_new();
+    dic3 = dict_new();
+    dic4 = dict_new();
 
     // insertamos dos elementos
     int_to_obj(1, &key); str_to_obj("Pepe", &value);
@@ -27,6 +29,16 @@ void main() {
     int_to_obj(3, &key2); str_to_obj("Adrian", &value2);
     dict_add(dic2, key2, value2);
 
+    // insertamos los elementos del tercer diccionario
+    int_to_obj(1, &key3); str_to_obj("Pepe", &value3);
+    dict_add(dic3, key3, value3);
+    int_to_obj(2, &key3); str_to_obj("Juan", &value3);
+    dict_add(dic3, key3, value3);
+    int_to_obj(3, &key3); str_to_obj("Adrian", &value3);
+    dict_add(dic3, key3, value3);
+    int_to_obj(4, &key3); str_to_obj("Pedro", &value3);
+    dict_add(dic3, key3, value3);
+
     switch (dict_equals(dic,dic2))
     {
     case 0:
@@ -40,6 +52,45 @@ void main() {
         break;
     case 3:
         printf("Hay un diccionario vacío \n");
+        break;
+    default:
+        printf("Ha habido un error \n");
+        break;
+    }
+
+    switch (dict_equals(dic,dic3))
+    {
+    case 0:
+        printf("Son iguales \n");
+        break;
+    case 1:
+        printf("No son iguales \n");
+        break;
+    case 2:
+        printf("No son igual de grandes \n");
+        break;
+    case 3:
+        printf("Hay un diccionario vacío \n");
+        break;
+    default:
+        printf("Ha habido un error \n");
+        break;
+    }
+
+    switch (dict_equals(dic,dic4))
+    {
+    case 0:
+        printf("Son iguales \n");
+        break;
+    case 1:
+        printf("No son iguales \n");
+        break;
+    case 2:
+        printf("No son igual de grandes \n");
+        break;
+    case 3:
+        printf("Hay un diccionario vacío \n");
+        break;
     default:
         printf("Ha habido un error \n");
         break;
