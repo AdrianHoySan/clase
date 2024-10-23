@@ -15,16 +15,30 @@ void main() {
 
     // insertamos dos elementos
     int_to_obj(1, &key); str_to_obj("Pepe", &value);
-    if(dict_add(dic, key, value) == 0) {
+    switch (dict_add(dic, key, value))
+    {
+    case 0:
         printf("Se ha añadido correctamente \n");
-    } else {
+        break;
+    case 1:
         printf("Esa clave ya existe \n");
+        break;
+    default:
+        printf("Error \n");
+        break;
     }
     int_to_obj(1, &key); str_to_obj("Amparo", &value);
-    if(dict_add(dic, key, value) == 0) {
+    switch (dict_add(dic, key, value))
+    {
+    case 0:
         printf("Se ha añadido correctamente \n");
-    } else {
+        break;
+    case 1:
         printf("Esa clave ya existe \n");
+        break;
+    default:
+        printf("Error \n");
+        break;
     }
     int_to_obj(2, &key); str_to_obj("Juan", &value);
     dict_add(dic, key, value);
