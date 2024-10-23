@@ -15,7 +15,17 @@ void main() {
 
     // insertamos dos elementos
     int_to_obj(1, &key); str_to_obj("Pepe", &value);
-    dict_add(dic, key, value);
+    if(dict_add(dic, key, value) == 0) {
+        printf("Se ha añadido correctamente \n");
+    } else {
+        printf("Esa clave ya existe \n");
+    }
+    int_to_obj(1, &key); str_to_obj("Amparo", &value);
+    if(dict_add(dic, key, value) == 0) {
+        printf("Se ha añadido correctamente \n");
+    } else {
+        printf("Esa clave ya existe \n");
+    }
     int_to_obj(2, &key); str_to_obj("Juan", &value);
     dict_add(dic, key, value);
     int_to_obj(3, &key); str_to_obj("Adrian", &value);
@@ -24,9 +34,9 @@ void main() {
     // insertamos los elementos del segundo diccionario
     int_to_obj(1, &key2); str_to_obj("Pepe", &value2);
     dict_add(dic2, key2, value2);
-    int_to_obj(2, &key2); str_to_obj("Juan", &value2);
-    dict_add(dic2, key2, value2);
     int_to_obj(3, &key2); str_to_obj("Adrian", &value2);
+    dict_add(dic2, key2, value2);
+    int_to_obj(2, &key2); str_to_obj("Juan", &value2);
     dict_add(dic2, key2, value2);
 
     // insertamos los elementos del tercer diccionario
@@ -96,34 +106,34 @@ void main() {
         break;
     }
 
-    // // buscamos elemento
-    // char str[50];
-    // int_to_obj(122, &key);
-    // if(dict_search(dic, key, &value) == 0) {
-    //     obj_to_str(value, str);
-    //     printf("%s \n", str);
-    // } else {
-    //     printf("No existe esa clave \n");
-    // }
+    // buscamos elemento
+    char str[50];
+    int_to_obj(2, &key);
+    if(dict_search(dic, key, &value) == 0) {
+        obj_to_str(value, str);
+        printf("%s \n", str);
+    } else {
+        printf("No existe esa clave \n");
+    }
 
-    // //eliminamos un elemento
-    // if(dict_remove(dic,key) == 0) {
-    //    printf("Eliminado \n"); 
-    // } else {
-    //     printf("No hay esa clave \n");
-    // }
+    //eliminamos un elemento
+    if(dict_remove(dic,key) == 0) {
+       printf("Eliminado \n"); 
+    } else {
+        printf("No existe esa clave \n");
+    }
 
-    // //iteramos
-    // int i;
-    // dict_node *node;
-    // node = dict_first(dic);
-    // while (node != NULL) {
-    //     dict_key(node, &key); dict_value(node, &value);
-    //     obj_to_int(key, &i); obj_to_str(value, str);
-    //     printf("%d->%s \n", i, str);
+    //iteramos
+    int i;
+    dict_node *node;
+    node = dict_first(dic);
+    while (node != NULL) {
+        dict_key(node, &key); dict_value(node, &value);
+        obj_to_int(key, &i); obj_to_str(value, str);
+        printf("%d->%s \n", i, str);
 
-    //     node = node->next;
-    // }
+        node = node->next;
+    }
     
     // destruimos el diccionario (libera TODO)
     dict_destroy(dic);

@@ -50,15 +50,30 @@ void dict_destroy(dict *dic) {
         
     while (nodoAux != NULL)
     {
-        siguiente = nodoAux->next;
+        siguiente = dict_next(dic, nodoAux);
         free(nodoAux);
         nodoAux = siguiente;
     }
 
     free(dic);
+}
 
+int existe(dict *dic, object key) {
+    int encontrado = 1;
+    dict_node *nodoAux = dict_first(dic);
 
+    if(nodoAux != NULL) {
+        do
+        {
+            if(strcmp(nodoAux->key.data,key.data) == 0) {
+                encontrado = 0;
+                break;
+            }
+            nodoAux = dict_next(dic, nodoAux);
+        } while (nodoAux != NULL);
+    }
 
+    return encontrado; 
 }
 
 int dict_add(dict *dic, object key, object value) {
@@ -66,22 +81,31 @@ int dict_add(dict *dic, object key, object value) {
     sprintf(nodo->key.data,"%s",key.data);
     sprintf(nodo->value.data,"%s",value.data);
     nodo->next = NULL;
+
     dict_node *nodoAux = dict_first(dic);
-    do
-    {
-        if(nodoAux == NULL) {
-            dic->first = nodo;
-            dic->len++;
-            break;
-        } else if(nodoAux->next == NULL) {
-            nodoAux->next = nodo;
-            dic->len++;
-            break;
-        }
-        nodoAux = nodoAux->next;
-    } while (nodoAux != NULL);
+
+    int anadido = 0;
+
+    if(existe(dic, key) != 0) {
+        do
+        {
+            if(nodoAux == NULL) {
+                dic->first = nodo;
+                dic->len++;
+                break;
+            } else if(nodoAux->next == NULL) {
+                nodoAux->next = nodo;
+                dic->len++;
+                break;
+            }
+            nodoAux = dict_next(dic, nodoAux);
+        } while (nodoAux != NULL);
+    } else {
+        anadido = 1;
+    }
+
     
-    return 0;
+    return anadido;
 }
 
 int dict_search(dict *dic, object key, object *dst) {
@@ -96,7 +120,7 @@ int dict_search(dict *dic, object key, object *dst) {
                 sprintf(dst->data,"%s",nodoAux->value.data);
                 break;
             }
-            nodoAux = nodoAux->next;
+            nodoAux = dict_next(dic, nodoAux);
         } while (nodoAux != NULL);
     } 
 
@@ -130,7 +154,7 @@ int dict_remove(dict *dic, object key) {
                     break;
                 }
             }
-            nodoAux = nodoAux->next;
+            nodoAux = dict_next(dic,nodoAux);
         } while (nodoAux->next != NULL);
     }
 
@@ -182,17 +206,18 @@ int dict_equals(dict *dic1, dict *dic2) {
             while(comparacionPrimero != NULL) {
                 siguienteSegundo = comparacionSegundo;
                 while(siguienteSegundo != NULL && iguales == 0) {
-                    if(strcmp(comparacionPrimero->key.data,siguienteSegundo->key.data) == 0) {
+                    if(strcmp(comparacionPrimero->key.data,siguienteSegundo->key.data) == 0 && strcmp(comparacionPrimero->value.data,siguienteSegundo->value.data) == 0) {
                         iguales = 1;
                     } else {
-                        siguienteSegundo = siguienteSegundo->next;
+                        siguienteSegundo = dict_next(dic2, siguienteSegundo);
                     }
                 }
                 if(iguales == 0) {
                     comprobacion = 1;
                     break;
                 }
-                comparacionPrimero = comparacionPrimero->next;
+                comparacionPrimero = dict_next(dic1, comparacionPrimero);
+                iguales = 0;
             }
         } else {
             comprobacion = 2;
@@ -203,3 +228,4 @@ int dict_equals(dict *dic1, dict *dic2) {
 
     return comprobacion;
 }
+
