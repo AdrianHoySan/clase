@@ -63,6 +63,7 @@ void main() {
     int_to_obj(4, &key3); str_to_obj("Pedro", &value3);
     dict_add(dic3, key3, value3);
 
+    //Vamos a ver si son iguales los diccionarios
     switch (dict_equals(dic,dic2))
     {
     case 0:
