@@ -5,8 +5,6 @@
  * @version 1
  * @date 2024-10-30
  * 
- * @copyright Copyright (c) 2024
- * 
  */
 #include "biblioteca.h"
 #include <stdlib.h>

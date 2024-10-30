@@ -1,3 +1,12 @@
+/**
+ * @file main.c
+ * @author Adrián Hoyos Sánchez
+ * @brief 
+ * @version 1
+ * @date 2024-10-30
+ * 
+ * 
+ */
 #include "biblioteca.h"
 #include "stdio.h"
 
