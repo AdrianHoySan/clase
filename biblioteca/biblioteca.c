@@ -151,7 +151,9 @@ int dict_add(dict *dic, object key, object value) {
     dict_node *nodo = malloc(sizeof(dict_node));
     int anadido = 0;
     sprintf(nodo->key.data,"%s",key.data);
+    nodo->key.type = key.type;
     sprintf(nodo->value.data,"%s",value.data);
+    nodo->value.type = value.type;
 
     nodo->next = NULL;
     dict_node *nodoAux = dict_first(dic);
@@ -227,6 +229,7 @@ int dict_remove(dict *dic, object key) {
         dic->first = nodoAux->next;
         free(nodoAux);
         boo = 0;
+        dic->len --;
     } else {
         //Recorremos todo el diccionario en busca de la clave que queremos eliminar
         do
@@ -236,11 +239,13 @@ int dict_remove(dict *dic, object key) {
                     siguiente = nodoAux->next->next;
                     free(nodoAux->next);
                     nodoAux->next = siguiente;
+                    dic->len --;
                     boo = 0;
                     break;
                 } else {
                     free(nodoAux->next);
                     nodoAux->next = NULL;
+                    dic->len --;
                     boo = 0;
                     break;
                 }
@@ -293,6 +298,7 @@ dict_node *dict_next(dict *dic, dict_node *current) {
  * @param dst el object donde vamos a almacenar dicha llave
  */
 void dict_key(dict_node *pair, object *dst) {
+    dst->type = pair->key.type;
     sprintf(dst->data,"%s",pair->key.data);
 }
 
@@ -303,6 +309,7 @@ void dict_key(dict_node *pair, object *dst) {
  * @param dst el object donde vamos a almacenar dicho valor
  */
 void dict_value(dict_node *pair, object *dst) {
+    dst->type = pair->value.type;
     sprintf(dst->data,"%s",pair->value.data);
 }
 
